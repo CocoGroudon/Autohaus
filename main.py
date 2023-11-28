@@ -5,7 +5,6 @@ import settings
 from autohaus import Autohaus
 from GUI import GUI
 
-
 def __init_logger():
     logging.basicConfig(level=logging.DEBUG, filename=f"{settings.BASE_DIR}/{datetime.datetime.now().strftime('%Y-%m-%d---%H-%M-%S')}.log")
     logger = logging.getLogger("Autohaus")

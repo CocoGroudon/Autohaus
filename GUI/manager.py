@@ -1,13 +1,7 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import filedialog
-from tkinter import font
  
 from .login import LoginPopup
 from .standardView import StandardView
-
-
 
 class GUI(tk.Tk):
     def __init__(self, *args, autohaus, **kwargs):
