@@ -2,7 +2,9 @@ from user import User
 
 class CredentialManager:
     def __init__(self):
-        self.credentials = {"admin": "admin"}
+        self.credentials = {"admin": "admin",
+                            "user": "user",
+                            "test": "test"}
 
     def check_username(func):
         """Decorator to check if username is in credentials"""
