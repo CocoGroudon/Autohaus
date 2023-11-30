@@ -12,6 +12,16 @@ class Car:
         self.brand = brand
         self.model = model
         self.price = price
+        self.image_path = None
+        self.fuel = None
+        self.gearbox = None
+        self.age = None
+        self.color = None
+        self.mileage = None
+        self.power = None
+        self.description = None
+        self.owner = None
+        self.sold = False
         if "image_path" in kwargs:
             self.image_path = kwargs["image_path"]
         if "fuel" in kwargs:
@@ -106,7 +116,7 @@ class Autohaus:
         if "image_path" in kwargs:
             image_path = kwargs["image_path"]
             # copy image to settings.IMAGE_PATH/self.cars_enum-kwarg["brand"]-kwarg["model"]
-            new_path = os.path.join(settings.CARS_DIR, f"{self.cars_enum} {kwargs['brand']}-{kwargs['model']}.png")
+            new_path = os.path.join(settings.IMAGE_DIR, f"{self.cars_enum} {kwargs['brand']}-{kwargs['model']}.png")
             shutil.copy(image_path, new_path)
             kwargs["image_path"] = new_path
             

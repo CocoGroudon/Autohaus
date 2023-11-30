@@ -8,7 +8,7 @@ class CarPopup(tk.Toplevel):
         self.car = car
 
         self.title(f"{self.car.brand} {self.car.model}")
-        self.resizable(width=False, height=False)
+        self.resizable(width=True, height=True)
         self.geometry("400x400")
 
         
@@ -16,13 +16,26 @@ class CarPopup(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=1)
-        self.columnconfigure(2, weight=1)
 
-        ttk.Label(self, text=self.car.brand).grid(row=0, column=0, sticky=tk.W)
-        ttk.Label(self, text=self.car.model).grid(row=0, column=1, sticky=tk.W)
-        ttk.Label(self, text=self.car.price).grid(row=0, column=2, sticky=tk.W)
+        ttk.Label(self, text=f"Marke: {self.car.brand}").grid(row=0, column=0, sticky=tk.W)
+        ttk.Label(self, text=f"Model: {self.car.model}").grid(row=1, column=0, sticky=tk.W)
+        ttk.Label(self, text=f"Preis: {self.car.price}").grid(row=2, column=0, sticky=tk.W)
+
+        if self.car.description:    ttk.Label(self, text=f"Beschreibung:    {self.car.description}")    .grid(row=4, column=0, columnspan=3, sticky=tk.W)
+        if self.car.sold:           ttk.Label(self, text=f"Verkauft:        {self.car.sold}")           .grid(row=4, column=2, sticky=tk.W)
+        if self.car.fuel:           ttk.Label(self, text=f"Kraftstoff:      {self.car.fuel}")           .grid(row=4, column=2, sticky=tk.W)
+        if self.car.gearbox:        ttk.Label(self, text=f"Getriebe:        {self.car.gearbox}")        .grid(row=4, column=2, sticky=tk.W)
+        if self.car.age:            ttk.Label(self, text=f"Alter:           {self.car.age}")            .grid(row=4, column=2, sticky=tk.W)
+        if self.car.color:          ttk.Label(self, text=f"Farbe:           {self.car.color}")          .grid(row=4, column=2, sticky=tk.W)
+        if self.car.mileage:        ttk.Label(self, text=f"Kilometerstand:  {self.car.mileage}")        .grid(row=4, column=2, sticky=tk.W)
+        if self.car.power:          ttk.Label(self, text=f"Leistung:        {self.car.power}")          .grid(row=4, column=2, sticky=tk.W)
+        if self.car.fuel:           ttk.Label(self, text=f"Kraftstoff:      {self.car.fuel}")           .grid(row=4, column=2, sticky=tk.W)
+    
+
+        if self.car.image_path:
+            self.image = tk.PhotoImage(file=self.car.image_path)
+            self.image_label = ttk.Label(self, image=self.image)
+            self.image_label.grid(row=0, column=1, rowspan=10, sticky=tk.NSEW)
 
     def load_protocol(self):
         self.protocol("WM_DELETE_WINDOW", self.on_closing)

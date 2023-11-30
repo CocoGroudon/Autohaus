@@ -79,7 +79,7 @@ class CarCreator(tk.Toplevel):
         self.price_entry.grid(row=1, column=2, sticky=tk.W)
 
         self.submit_button = ttk.Button(self, text="Erstellen", command=self.submit)
-        self.submit_button.grid(row=4, column=0, columnspan=3, sticky=tk.NSEW)
+        self.submit_button.grid(row=5, column=0, columnspan=3, sticky=tk.NSEW)
 
     def submit(self):
         brand = self.brand_entry.get()
@@ -100,7 +100,7 @@ class CarCreator(tk.Toplevel):
              fuel=self.fuel_entry.get(), 
              power=self.power_entry.get(), 
              gearbox=self.gearbox_entry.get(), 
-             image=self.image_path
+             image_path=self.image_path
              )
         self.destroy()
         self.parent.carlist.refresh()
