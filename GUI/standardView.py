@@ -17,7 +17,7 @@ class Header(ttk.Frame):
     def create_widgets(self):
         self.columnconfigure(0, weight=1)
 
-        self.logout = ttk.Button(self, text="Logout", command=self.logout)
+        self.logout = ttk.Button(self, text="Abmelden", command=self.logout)
         self.logout.grid(row=0, column=0, sticky=tk.W)
 
         self.user = ttk.Label(self, text=f"Wilkommen {self.autohaus.user.displayname}!")
@@ -40,8 +40,7 @@ class StandardView(ttk.Frame):
         self.header = Header(parent=self, autohaus=self.autohaus)
         self.header.grid(row=0, column=0, sticky=tk.NSEW)
 
-
-        self.carceate_button = ttk.Button(self, text="Create Car", command=self.create_car)
+        self.carceate_button = ttk.Button(self, text="Auto hinzufügen", command=self.create_car)
         self.carceate_button.grid(row=1, column=0, sticky=tk.NSEW)
 
         self.carlist = CarList(parent=self, autohaus=self.autohaus)

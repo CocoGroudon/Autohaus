@@ -5,11 +5,12 @@ class CarPopup(tk.Toplevel):
     def __init__(self, *, parent, car, **kwargs):
         super().__init__(parent, **kwargs)
         self.parent = parent
+        self.car = car
+
         self.title(f"{self.car.brand} {self.car.model}")
         self.resizable(width=False, height=False)
         self.geometry("400x400")
 
-        self.car = car
         
         self.load_protocol()
         self.create_widgets()

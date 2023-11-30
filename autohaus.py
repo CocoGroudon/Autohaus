@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import shutil
 
 from credentialManager import CredentialManager
 import settings
@@ -11,14 +12,46 @@ class Car:
         self.brand = brand
         self.model = model
         self.price = price
+        if "image_path" in kwargs:
+            self.image_path = kwargs["image_path"]
+        if "fuel" in kwargs:
+            self.fuel = kwargs["fuel"]
+        if "gearbox" in kwargs:
+            self.gearbox = kwargs["gearbox"]
+        if "age" in kwargs:
+            self.age = kwargs["age"]
+        if "color" in kwargs:
+            self.color = kwargs["color"]
+        if "mileage" in kwargs:
+            self.mileage = kwargs["mileage"]
+        if "power" in kwargs:
+            self.power = kwargs["power"]
+        if "description" in kwargs:
+            self.description = kwargs["description"]
+        if "owner" in kwargs:
+            self.owner = kwargs["owner"]
+        if "sold" in kwargs:
+            self.sold = kwargs["sold"]
+        
+    def save_json(self, file):
+        json.dump(self.__dict__, file)
 
+    def load_json(self, json_string):
+        data = json.loads(json_string)
+        self.__dict__.update(data)
+        return self
+
+
+        
 
 class Autohaus:
     def __init__(self):
         self.credentialManager = CredentialManager()
         self.user = None    
 
+
         # preload config in case it doesn't exist
+        self.name = "Autohaus"
         self.cars = []
         self.cars_enum = 0
         self.known_models = {}
@@ -48,6 +81,8 @@ class Autohaus:
                 self.cars_enum = data["cars_enum"]
             if "known_models" in data:
                 self.known_models = data["known_models"]
+            if "name" in data:
+                self.name = data["name"]
 
     def load_cars(self):
         for car in os.listdir(settings.CARS_DIR):
@@ -67,26 +102,33 @@ class Autohaus:
             json.dump(data, f)
 
 
-    def load_cars(self):
-        for car in os.listdir(settings.CARS_DIR):
-            with open(os.path.join(settings.CARS_DIR, car), "r") as f:
-                data = json.load(f)
-                self.cars.append(Car(**data))
+    def add_car(self, **kwargs):
+        if "image_path" in kwargs:
+            image_path = kwargs["image_path"]
+            # copy image to settings.IMAGE_PATH/self.cars_enum-kwarg["brand"]-kwarg["model"]
+            new_path = os.path.join(settings.CARS_DIR, f"{self.cars_enum} {kwargs['brand']}-{kwargs['model']}.png")
+            shutil.copy(image_path, new_path)
+            kwargs["image_path"] = new_path
+            
+        car = Car(**kwargs)
 
-    def save_car(self, car):
-        with open(os.path.join(settings.CARS_DIR, f"{car.cars_enum} {car.brand}-{car.model}.json"), "w") as f:
-            json.dump(car.__dict__, f)
-
-    def add_car(self, brand, model, price):
-        car = Car(brand=brand, model=model, price=price)
         car.cars_enum = self.cars_enum
         self.cars_enum += 1
-
         self.cars.append(car)
-        self.save_car(car)
+
+        carpath = os.path.join(settings.CARS_DIR, f"{car.cars_enum} {car.brand}-{car.model}.json")
+        car.save_json(open(carpath, "w"))
+
 
     def get_cars(self):
         return self.cars
+
+    def get_fuels(self):
+        return ["Benzin", "Diesel", "Elektro", "Hybrid"]
+
+    def get_gearboxes(self):
+        return ["Automatik", "Manuell"]
+
     
     def set_user(self, user):
         self.user = user
