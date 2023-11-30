@@ -1,18 +1,19 @@
 import tkinter as tk
  
-from .login import LoginPopup
+from .login import LoginFrame
 from .standardView import StandardView
 
 class GUI(tk.Tk):
     def __init__(self, *args, autohaus, **kwargs):
         super().__init__(*args, **kwargs)
         self.autohaus = autohaus
-        self.title("My GUI")
+        self.title(f"Autohaus - {self.autohaus.name}")
         self.geometry("600x400")
         self.resizable(width=False, height=False)
 
         self.frames = []
 
+        self.load_protocol()
         self.login()
 
     def changeFrame(self, frame):
@@ -22,10 +23,17 @@ class GUI(tk.Tk):
         self.currentFrame.tkraise()
 
     def login(self):
-        login_popup = LoginPopup(self, autohaus= self.autohaus)
+        login_popup = LoginFrame(self, autohaus= self.autohaus)
         self.changeFrame(login_popup)
 
     def standardView(self):
         standard_view = StandardView(parent=self, autohaus=self.autohaus)
         self.changeFrame(standard_view)
+
+    def load_protocol(self):
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    def on_closing(self):
+        self.autohaus.close()
+        self.destroy()
 
