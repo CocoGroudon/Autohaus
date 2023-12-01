@@ -4,8 +4,8 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import font
 
-from .carlist import CarList
-from .carcreator import CarCreator
+from .vehiclelist import VehicleList
+from .creator import Creator
 
 class Header(ttk.Frame):
     def __init__(self, *, parent, autohaus, **kwargs):
@@ -40,15 +40,15 @@ class StandardView(ttk.Frame):
         self.header = Header(parent=self, autohaus=self.autohaus)
         self.header.grid(row=0, column=0, sticky=tk.NSEW)
 
-        self.carceate_button = ttk.Button(self, text="Auto hinzufügen", command=self.create_car)
-        self.carceate_button.grid(row=1, column=0, sticky=tk.NSEW)
+        self.vehicleceate_button = ttk.Button(self, text="Auto hinzufügen", command=self.create_vehicle)
+        self.vehicleceate_button.grid(row=1, column=0, sticky=tk.NSEW)
 
-        self.carlist = CarList(parent=self, autohaus=self.autohaus)
-        self.carlist.grid(row=2, column=0, sticky=tk.NSEW)
+        self.vehiclelist = VehicleList(parent=self, autohaus=self.autohaus)
+        self.vehiclelist.grid(row=2, column=0, sticky=tk.NSEW)
 
 
-    def create_car(self):
-        CarCreator(parent=self, autohaus=self.autohaus)
+    def create_vehicle(self):
+        Creator(parent=self, autohaus=self.autohaus)
 
     def logout(self):
         self.autohaus.logout()

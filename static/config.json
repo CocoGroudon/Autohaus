@@ -1,1 +1,1 @@
-{"cars_enum": 3, "name": "CocoHut", "known_models": {"BMW": ["M3", "M5", "M6", "X5", "X6", "Z4"], "Audi": ["A3", "A4", "A5", "A6", "A7", "A8", "Q5", "Q7"], "Mercedes": ["C", "E", "S", "ML", "GL", "SLK", "SL", "CLS", "CL", "GLK", "G"]}}
+{"vehicle_enum": 3, "name": "CocoHut", "known_models": {"BMW": ["M3", "M5", "M6", "X5", "X6", "Z4"], "Audi": ["A3", "A4", "A5", "A6", "A7", "A8", "Q5", "Q7"], "Mercedes": ["C", "E", "S", "ML", "GL", "SLK", "SL", "CLS", "CL", "GLK", "G"]}}

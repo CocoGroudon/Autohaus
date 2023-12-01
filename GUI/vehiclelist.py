@@ -1,15 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
 
-class CarPopup(tk.Toplevel):
-    def __init__(self, *, parent, car, **kwargs):
+class VehiclePopup(tk.Toplevel):
+    def __init__(self, *, parent, vehicle, **kwargs):
         super().__init__(parent, **kwargs)
         self.parent = parent
-        self.car = car
+        self.vehicle = vehicle
 
-        self.title(f"{self.car.brand} {self.car.model}")
-        self.resizable(width=True, height=True)
-        self.geometry("400x400")
+        self.title(f"{self.vehicle.brand} {self.vehicle.model}")
+        self.resizable(width=False, height=False)
 
         
         self.load_protocol()
@@ -17,23 +16,34 @@ class CarPopup(tk.Toplevel):
 
     def create_widgets(self):
 
-        ttk.Label(self, text=f"Marke: {self.car.brand}").grid(row=0, column=0, sticky=tk.W)
-        ttk.Label(self, text=f"Model: {self.car.model}").grid(row=1, column=0, sticky=tk.W)
-        ttk.Label(self, text=f"Preis: {self.car.price}").grid(row=2, column=0, sticky=tk.W)
+        ttk.Label(self, text=f"Marke: {self.vehicle.brand}").grid(row=0, column=0, sticky=tk.W)
+        ttk.Label(self, text=f"Model: {self.vehicle.model}").grid(row=1, column=0, sticky=tk.W)
+        ttk.Label(self, text=f"Preis: {self.vehicle.price}").grid(row=2, column=0, sticky=tk.W)
+        ttk.Label(self, text=f"Beschreibung:    {self.vehicle.description}")    .grid(row=4, column=0, rowspan=3, sticky=tk.W)
 
-        if self.car.description:    ttk.Label(self, text=f"Beschreibung:    {self.car.description}")    .grid(row=4, column=0, columnspan=3, sticky=tk.W)
-        if self.car.sold:           ttk.Label(self, text=f"Verkauft:        {self.car.sold}")           .grid(row=4, column=2, sticky=tk.W)
-        if self.car.fuel:           ttk.Label(self, text=f"Kraftstoff:      {self.car.fuel}")           .grid(row=4, column=2, sticky=tk.W)
-        if self.car.gearbox:        ttk.Label(self, text=f"Getriebe:        {self.car.gearbox}")        .grid(row=4, column=2, sticky=tk.W)
-        if self.car.age:            ttk.Label(self, text=f"Alter:           {self.car.age}")            .grid(row=4, column=2, sticky=tk.W)
-        if self.car.color:          ttk.Label(self, text=f"Farbe:           {self.car.color}")          .grid(row=4, column=2, sticky=tk.W)
-        if self.car.mileage:        ttk.Label(self, text=f"Kilometerstand:  {self.car.mileage}")        .grid(row=4, column=2, sticky=tk.W)
-        if self.car.power:          ttk.Label(self, text=f"Leistung:        {self.car.power}")          .grid(row=4, column=2, sticky=tk.W)
-        if self.car.fuel:           ttk.Label(self, text=f"Kraftstoff:      {self.car.fuel}")           .grid(row=4, column=2, sticky=tk.W)
-    
+        ttk.Label(self, text=f"Verkauft:")          .grid(row=0, column=2, sticky=tk.W)
+        ttk.Label(self, text="Nein" if not self.vehicle.sold else "Ja")     .grid(row=0, column=3, sticky=tk.W)
 
-        if self.car.image_path:
-            self.image = tk.PhotoImage(file=self.car.image_path)
+        ttk.Label(self, text=f"Kraftstoff:")        .grid(row=2, column=2, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.fuel)     .grid(row=2, column=3, sticky=tk.W)
+
+        ttk.Label(self, text=f"Getriebe:")          .grid(row=3, column=2, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.gearbox)  .grid(row=3, column=3, sticky=tk.W)
+
+        ttk.Label(self, text=f"Alter:")             .grid(row=4, column=2, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.age)      .grid(row=4, column=3, sticky=tk.W)
+
+        ttk.Label(self, text=f"Farbe:")             .grid(row=5, column=2, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.color)    .grid(row=5, column=3, sticky=tk.W)
+
+        ttk.Label(self, text=f"Kilometerstand:")    .grid(row=6, column=2, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.mileage)  .grid(row=6, column=3, sticky=tk.W)
+
+        ttk.Label(self, text=f"Leistung:")          .grid(row=7, column=2, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.power)    .grid(row=7, column=3, sticky=tk.W)
+
+        if self.vehicle.image:
+            self.image = tk.PhotoImage(file=self.vehicle.get_image())
             self.image_label = ttk.Label(self, image=self.image)
             self.image_label.grid(row=0, column=1, rowspan=10, sticky=tk.NSEW)
 
@@ -43,11 +53,11 @@ class CarPopup(tk.Toplevel):
     def on_closing(self):
         self.destroy()
 
-class CarLabel(ttk.Frame):
-    def __init__(self, *, parent, car, **kwargs):
+class VehicleLabel(ttk.Frame):
+    def __init__(self, *, parent, vehicle, **kwargs):
         super().__init__(parent, **kwargs)
         self.parent = parent
-        self.car = car
+        self.vehicle = vehicle
         self.create_widgets()
 
     def create_widgets(self):
@@ -55,17 +65,17 @@ class CarLabel(ttk.Frame):
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
 
-        ttk.Label(self, text=self.car.brand).grid(row=0, column=0, sticky=tk.W)
-        ttk.Label(self, text=self.car.model).grid(row=0, column=1, sticky=tk.W)
-        ttk.Label(self, text=self.car.price).grid(row=0, column=2, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.brand).grid(row=0, column=0, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.model).grid(row=0, column=1, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.price).grid(row=0, column=2, sticky=tk.W)
 
         self.view_button = ttk.Button(self, text="Einsehen", command=self.view)
         self.view_button.grid(row=0, column=3, sticky=tk.E)
 
     def view(self):
-        CarPopup(parent=self.parent, car=self.car)
+        VehiclePopup(parent=self.parent, vehicle=self.vehicle)
 
-class CarList(ttk.Frame):
+class VehicleList(ttk.Frame):
     def __init__(self, *, parent, autohaus, **kwargs):
         super().__init__(parent, **kwargs)
         self.parent = parent
@@ -104,8 +114,8 @@ class CarList(ttk.Frame):
         self.info = ttk.Label(self.frame, text="Marke\tModel\tPreis")
         self.info.pack(fill=tk.X)
 
-        for car in self.autohaus.get_cars():
-            CarLabel(parent=self.frame, car=car).pack(fill=tk.X)
+        for vehicle in self.autohaus.get_vehicles():
+            VehicleLabel(parent=self.frame, vehicle=vehicle).pack(fill=tk.X)
 
     def _on_mousewheel(self, event):
         if event.num == 4:

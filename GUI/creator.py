@@ -3,7 +3,7 @@ from tkinter import messagebox, ttk, filedialog
 
 from .autocompleteentry import AutocompleteEntry
 
-class CarCreator(tk.Toplevel):
+class Creator(tk.Toplevel):
     def __init__(self, *, parent, autohaus, **kwargs):
         super().__init__(parent, **kwargs)
         self.title("Auto erstellen")
@@ -60,6 +60,10 @@ class CarCreator(tk.Toplevel):
 
 
     def create_required_widgets(self):
+        # takes possible types from autohaus.known_types and creates a selection menu
+        self.type_entry = ttk.Combobox(self, values=list(self.autohaus.known_types.keys()))
+        self.type_entry.grid(row=0, column=3, sticky=tk.W)
+
         self.brand_label = ttk.Label(self, text="Marke *:")
         self.brand_label.grid(row=0, column=0, sticky=tk.W)
 
@@ -86,25 +90,28 @@ class CarCreator(tk.Toplevel):
         model = self.model_entry.get()
         price = self.price_entry.get()
 
-        if not brand or not model or not price:
+        vehicle_type = self.type_entry.get()
+
+        if not brand or not model or not price or not vehicle_type:
             messagebox.showerror(title="Fehler!", message="Bitte fülle alle Felder aus!")
             return
 
-        self.autohaus.add_car(
+        self.autohaus.add_vehicle(
+            vehicle_type=vehicle_type,
             brand=brand,
-             model=model, 
-             price=price, 
-             age=self.age_entry.get(), 
-             color=self.color_entry.get(), 
-             mileage=self.mileage_entry.get(), 
-             fuel=self.fuel_entry.get(), 
-             power=self.power_entry.get(), 
-             gearbox=self.gearbox_entry.get(), 
-             image_path=self.image_path
-             )
+            model=model, 
+            price=price, 
+            age=self.age_entry.get(), 
+            color=self.color_entry.get(), 
+            mileage=self.mileage_entry.get(), 
+            fuel=self.fuel_entry.get(), 
+            power=self.power_entry.get(), 
+            gearbox=self.gearbox_entry.get(), 
+            image_path=self.image_path
+            )
         self.destroy()
-        self.parent.carlist.refresh()
-        self.parent.carlist.tkraise()
+        self.parent.vehiclelist.refresh()
+        self.parent.vehiclelist.tkraise()
 
     def load_protocol(self):
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
