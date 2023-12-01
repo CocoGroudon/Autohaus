@@ -46,6 +46,10 @@ class Creator(tk.Toplevel):
         self.gearbox_entry = AutocompleteEntry(self, autocomplete_func=lambda: self.autohaus.get_gearboxes())
         self.gearbox_entry.grid(row=3, column=5, sticky=tk.W)
 
+        self.description_label = ttk.Label(self, text="Beschreibung:")
+        self.description_label.grid(row=5, column=0, sticky=tk.W)
+        self.description_entry = ttk.Entry(self)
+        self.description_entry.grid(row=6, column=0, columnspan=6, sticky=tk.W)
 
         self.image_path = None
         self.image_button = ttk.Button(self, text="Bild Auswählen", command=self.select_image)
@@ -93,7 +97,7 @@ class Creator(tk.Toplevel):
         vehicle_type = self.type_entry.get()
 
         if not brand or not model or not price or not vehicle_type:
-            messagebox.showerror(title="Fehler!", message="Bitte fülle alle Felder aus!")
+            messagebox.showerror(title="Fehler!", message="Bitte fülle alle Felder mit * aus!")
             return
 
         self.autohaus.add_vehicle(
@@ -107,6 +111,7 @@ class Creator(tk.Toplevel):
             fuel=self.fuel_entry.get(), 
             power=self.power_entry.get(), 
             gearbox=self.gearbox_entry.get(), 
+            description=self.description_entry.get(),
             image_path=self.image_path
             )
         self.destroy()

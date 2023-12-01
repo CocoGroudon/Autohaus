@@ -4,8 +4,8 @@ import time
 import shutil
 from PIL import Image
 
-from credentialManager import CredentialManager
-import settings
+from .credentialManager import CredentialManager
+from .settings import Settings
 
 class Vehicle:
     storage_path = None
@@ -57,12 +57,12 @@ class Vehicle:
     def get_image(self):
         if not self.image:
             return None
-        path = os.path.join(settings.IMAGE_DIR, f"{self.vehicle_enum}-{self.brand}-{self.model}.png")
+        path = os.path.join(Settings.IMAGE_DIR, f"{self.vehicle_enum}-{self.brand}-{self.model}.png")
         return path
 
 class Car(Vehicle):
     # set path for cars directory
-    storage_path = settings.CARS_DIR
+    storage_path = Settings.CARS_DIR
 
     def __init__(self, brand, model, price, **kwargs):
         super().__init__(brand, model, price, **kwargs)
@@ -70,7 +70,7 @@ class Car(Vehicle):
 
 class Motorcycle(Vehicle):
     # set path for motorcycles directory
-    storage_path = settings.MOTORCYCLES_DIR
+    storage_path = Settings.MOTORCYCLES_DIR
 
     def __init__(self, brand, model, price, **kwargs):
         super().__init__(brand, model, price, **kwargs)
@@ -114,10 +114,10 @@ class Autohaus:
 
     def load_config(self):
         # test if config exists
-        if not os.path.exists(os.path.join(settings.STATIC_DIR, "config.json")):
+        if not os.path.exists(os.path.join(Settings.STATIC_DIR, "config.json")):
             self.save_config()
             return
-        with open(os.path.join(settings.STATIC_DIR, "config.json"), "r") as f:
+        with open(os.path.join(Settings.STATIC_DIR, "config.json"), "r") as f:
             data = json.load(f)
             if "vehicle_enum" in data:
                 self.vehicle_enum = data["vehicle_enum"]
@@ -136,7 +136,7 @@ class Autohaus:
                     self.vehicles.append(typeclass(**data))
 
     def save_dynamic_config(self):
-        config_file = os.path.join(settings.STATIC_DIR, "config.json")
+        config_file = os.path.join(Settings.STATIC_DIR, "config.json")
 
         with open(config_file, "r") as f:
             data = json.load(f)
@@ -151,7 +151,7 @@ class Autohaus:
         if "image_path" in kwargs.keys():
             if kwargs["image_path"]:
                 image_path = kwargs["image_path"]
-                new_path = os.path.join(settings.IMAGE_DIR, f"{self.vehicle_enum}-{kwargs['brand']}-{kwargs['model']}.png")
+                new_path = os.path.join(Settings.IMAGE_DIR, f"{self.vehicle_enum}-{kwargs['brand']}-{kwargs['model']}.png")
                 self.process_image(image_path, new_path)
                 kwargs["image_path"] = new_path
             del kwargs["image_path"]

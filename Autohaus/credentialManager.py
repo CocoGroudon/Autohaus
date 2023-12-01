@@ -1,4 +1,4 @@
-from user import User
+from .user import User
 
 class CredentialManager:
     def __init__(self):
