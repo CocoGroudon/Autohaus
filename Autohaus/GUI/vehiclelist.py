@@ -19,33 +19,28 @@ class VehiclePopup(tk.Toplevel):
         ttk.Label(self, text=f"Marke: {self.vehicle.brand}").grid(row=0, column=0, sticky=tk.W)
         ttk.Label(self, text=f"Model: {self.vehicle.model}").grid(row=1, column=0, sticky=tk.W)
         ttk.Label(self, text=f"Preis: {self.vehicle.price}").grid(row=2, column=0, sticky=tk.W)
+
+        ttk.Label(self, text=f"Farbe: {self.vehicle.color}").grid(row=3, column=0, sticky=tk.W)
+
         ttk.Label(self, text=f"Beschreibung:    {self.vehicle.description}")    .grid(row=4, column=0, rowspan=3, sticky=tk.W)
 
-        ttk.Label(self, text=f"Verkauft:")          .grid(row=0, column=2, sticky=tk.W)
-        ttk.Label(self, text="Nein" if not self.vehicle.sold else "Ja")     .grid(row=0, column=3, sticky=tk.W)
+        ttk.Label(self, text=f"Verkauft: {'Nein' if not self.vehicle.sold else 'Ja'}")          .grid(row=0, column=2, sticky=tk.W)
 
-        ttk.Label(self, text=f"Kraftstoff:")        .grid(row=2, column=2, sticky=tk.W)
-        ttk.Label(self, text=self.vehicle.fuel)     .grid(row=2, column=3, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.parts["engine"].infotext).grid(row=2, column=10, sticky=tk.W)
 
-        ttk.Label(self, text=f"Getriebe:")          .grid(row=3, column=2, sticky=tk.W)
-        ttk.Label(self, text=self.vehicle.gearbox)  .grid(row=3, column=3, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.parts["gearbox"].infotext).grid(row=3, column=10, sticky=tk.W)
 
-        ttk.Label(self, text=f"Alter:")             .grid(row=4, column=2, sticky=tk.W)
-        ttk.Label(self, text=self.vehicle.age)      .grid(row=4, column=3, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.parts["tire"].infotext)   .grid(row=4, column=10, sticky=tk.W)
 
-        ttk.Label(self, text=f"Farbe:")             .grid(row=5, column=2, sticky=tk.W)
-        ttk.Label(self, text=self.vehicle.color)    .grid(row=5, column=3, sticky=tk.W)
+        ttk.Label(self, text=self.vehicle.parts["chassis"].infotext).grid(row=5, column=10, sticky=tk.W)
 
-        ttk.Label(self, text=f"Kilometerstand:")    .grid(row=6, column=2, sticky=tk.W)
-        ttk.Label(self, text=self.vehicle.mileage)  .grid(row=6, column=3, sticky=tk.W)
 
-        ttk.Label(self, text=f"Leistung:")          .grid(row=7, column=2, sticky=tk.W)
-        ttk.Label(self, text=self.vehicle.power)    .grid(row=7, column=3, sticky=tk.W)
 
-        if self.vehicle.image:
-            self.image = tk.PhotoImage(file=self.vehicle.get_image())
-            self.image_label = ttk.Label(self, image=self.image)
-            self.image_label.grid(row=0, column=1, rowspan=10, sticky=tk.NSEW)
+
+        
+        self.image = tk.PhotoImage(file=self.vehicle.image_path)
+        self.image_label = ttk.Label(self, image=self.image)
+        self.image_label.grid(row=0, column=1, rowspan=30, columnspan=5, sticky=tk.NSEW)
 
     def load_protocol(self):
         self.protocol("WM_DELETE_WINDOW", self.on_closing)

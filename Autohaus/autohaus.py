@@ -3,48 +3,40 @@ import os
 import time
 import shutil
 from PIL import Image
+import math
 
 from .credentialManager import CredentialManager
 from .settings import Settings
+from .carparts import *
+
+
+import pickle
+def save_car(objekt):
+    with open("D:\Schule\Info\Autohaus\Autohaus\car.pkl", 'wb') as datei:
+        pickle.dump(objekt, datei)
+
+
+
+
+
 
 class Vehicle:
     storage_path = None
 
-    def __init__(self, brand, model, price, **kwargs):
+    def __init__(self, brand, model, price, color, description, image_path, **kwargs):
         self.brand = brand
         self.model = model
         self.price = price
+        self.color = color
+        self.image_path = image_path
+
+        self.description = description
+        self.sold = False
 
         self.vehicle_enum = None
         if "vehicle_enum" in kwargs:
             self.vehicle_enum = kwargs["vehicle_enum"]
 
-        self.image = kwargs["image"] if "image" in kwargs else False
-        self.fuel = None
-        self.gearbox = None
-        self.age = None
-        self.color = None
-        self.mileage = None
-        self.power = None
-        self.description = None
-        self.sold = False
-
-        if "fuel" in kwargs:
-            self.fuel = kwargs["fuel"]
-        if "gearbox" in kwargs:
-            self.gearbox = kwargs["gearbox"]
-        if "age" in kwargs:
-            self.age = kwargs["age"]
-        if "color" in kwargs:
-            self.color = kwargs["color"]
-        if "mileage" in kwargs:
-            self.mileage = kwargs["mileage"]
-        if "power" in kwargs:
-            self.power = kwargs["power"]
-        if "description" in kwargs:
-            self.description = kwargs["description"]
-        if "sold" in kwargs:
-            self.sold = kwargs["sold"]
         
     def save_json(self, file):
         json.dump(self.__dict__, file)
@@ -64,8 +56,37 @@ class Car(Vehicle):
     # set path for cars directory
     storage_path = Settings.CARS_DIR
 
-    def __init__(self, brand, model, price, **kwargs):
-        super().__init__(brand, model, price, **kwargs)
+    def __init__(self, brand, model, price, color, description, image_path, engine:Motor, gearbox:Gearbox, tire:Tire, chassis:Chassis,  **kwargs):
+        super().__init__(brand, model, price, color, description, image_path)
+        print(engine)
+        print(gearbox)
+        print(tire)
+        print(chassis)
+        self.parts = {
+            "engine": engine,
+            "gearbox": gearbox,
+            "tire": tire,
+            "chassis": chassis
+        }
+
+    def get_data(self):
+        data = self.__dict__.copy()
+        data["type"] = self.__name__
+        partsdict  = {}
+        for parttype in self.parts.keys():
+            part = self.parts[parttype]
+            partsdict[parttype] = part.get_data()
+        data["parts"] = partsdict
+        return data
+
+    def build_from_data(self, data): #TODO: test
+        self.__dict__.update(data)
+        for parttype in self.parts.keys():
+            part = self.parts[parttype]
+            partdata = data["parts"][parttype]
+            part.__dict__.update(partdata)
+
+
 
 
 class Motorcycle(Vehicle):
@@ -79,17 +100,38 @@ class Motorcycle(Vehicle):
 
 
 
-
         
 
 class Autohaus:
+    Settings = Settings
     def __init__(self):
         self.credentialManager = CredentialManager()
         self.user = None    
 
-        self.known_types = {
-            "Auto": Car,
-            "Motorrad": Motorcycle
+
+        self.known_vehicle_types = {
+            "Car": Car,
+            "Motorcycle": Motorcycle
+        }
+
+        self.known_parts_types = {
+            "Motor": Motor,
+            "CombustionEngine": CombustionEngine,
+            "ElectricEngine": ElectricEngine,
+
+            "Gearbox": Gearbox,
+            "ManualGearbox": ManualGearbox,
+            "AutomaticGearbox": AutomaticGearbox,
+
+            "Tire": Tire,
+            "WinterTire": WinterTire,
+            "SummerTire": SummerTire,
+            "SportsTire": SportsTire,
+
+            "Chassis": Chassis,
+            "SportsChassis": SportsChassis,
+            "LuxuryChassis": LuxuryChassis
+
         }
 
         # preload config in case it doesn't exist
@@ -103,7 +145,6 @@ class Autohaus:
 
     def get_brands(self):
         brands = self.known_models.keys()
-        print(brands)
         return brands
     
     def get_models(self, brand):
@@ -111,6 +152,37 @@ class Autohaus:
             return self.known_models[brand]
         except KeyError:
             return []
+        
+    def get_vehicles(self):
+        return self.vehicles
+        
+    def get_engines(self):
+        return {
+            "Verbrenner": CombustionEngine,
+            "Elektro": ElectricEngine
+        }
+
+    def get_fuels(self):
+        return ["Benzin", "Diesel", "Elektro", "Hybrid"]
+
+    def get_gearboxes(self):
+        return {
+            "Automatik": AutomaticGearbox,
+            "Manuell": ManualGearbox
+        }
+    
+    def get_tires(self):
+        return {
+            "Winter": WinterTire,
+            "Sommer": SummerTire,
+            "Sport": SportsTire
+        }
+    
+    def get_chassis(self):
+        return {
+            "Sport": SportsChassis,
+            "Luxus": LuxuryChassis
+        }
 
     def load_config(self):
         # test if config exists
@@ -127,13 +199,34 @@ class Autohaus:
                 self.name = data["name"]
 
     def load_vehicles(self):
-        for type in self.known_types.keys():
-            typeclass = self.known_types[type]
+        for type in self.known_vehicle_types.keys():
+            typeclass = self.known_vehicle_types[type]
             directory = typeclass.storage_path
             for vehicle in os.listdir(directory):
                 with open(os.path.join(directory, vehicle), "r") as f:
                     data = json.load(f)
-                    self.vehicles.append(typeclass(**data))
+                    self.vehicles.append(self.build_vehicle(data))
+
+    def build_vehicle(self, data):
+        type = data["type"]
+        typeclass = self.known_vehicle_types[type]
+        parts = data["parts"]
+        for part_key in parts:
+            part = parts[part_key]
+            parts[part_key] = self.build_part(part)
+
+        vehicle = typeclass(engine=parts["engine"], gearbox=parts["gearbox"], tire=parts["tire"], chassis=parts["chassis"], **data)
+        # print(f"finished building {vehicle.brand} {vehicle.model}")
+        return vehicle
+    
+    def build_part(self, data):
+        type = data["type"]
+        del data["type"]
+        typeclass = self.known_parts_types[type]
+        part = typeclass(**data)
+        # print(f"finished building {type}", part)
+        return part
+
 
     def save_dynamic_config(self):
         config_file = os.path.join(Settings.STATIC_DIR, "config.json")
@@ -147,43 +240,17 @@ class Autohaus:
             json.dump(data, f)
 
 
-    def add_vehicle(self, **kwargs):
-        if "image_path" in kwargs.keys():
-            if kwargs["image_path"]:
-                image_path = kwargs["image_path"]
-                new_path = os.path.join(Settings.IMAGE_DIR, f"{self.vehicle_enum}-{kwargs['brand']}-{kwargs['model']}.png")
-                self.process_image(image_path, new_path)
-                kwargs["image_path"] = new_path
-            del kwargs["image_path"]
-            kwargs["image"] = True
-            
-        vehicle = self.known_types[kwargs["vehicle_type"]](**kwargs)
-
+    def add_vehicle(self, vehicle):
         vehicle.vehicle_enum = self.vehicle_enum
         self.vehicle_enum += 1
+
         self.vehicles.append(vehicle)
-
         vehiclepath = os.path.join(vehicle.storage_path, f"{vehicle.vehicle_enum}-{vehicle.brand}-{vehicle.model}.json")
-        vehicle.save_json(open(vehiclepath, "w"))
+        vehicle_data = vehicle.get_data()
 
-    def process_image(self, original_path, new_path):
-        new_type = "PNG"
-        new_size = (300, 300)
-        image = Image.open(original_path)
-        # Scale image so that it fitns into the new size but keeps the aspect ratio
-        image.thumbnail(new_size, )
-        # Save image
-        image.save(new_path, new_type)
+        save_car(vehicle)
 
 
-    def get_vehicles(self):
-        return self.vehicles
-
-    def get_fuels(self):
-        return ["Benzin", "Diesel", "Elektro", "Hybrid"]
-
-    def get_gearboxes(self):
-        return ["Automatik", "Manuell"]
 
     
     def set_user(self, user):

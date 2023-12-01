@@ -1,0 +1,41 @@
+{
+    "type": "Car",
+    "brand": "BMW",
+    "model": "i5",
+    "price": "50000",
+    "color": "Silber",
+    "image_path": "d:\\Schule\\Info\\Autohaus\\Autohaus\\Autohaus\\static\\images\\2023-12-01_22-44-13.png",
+    "description": "None",
+    "sold": "False",
+    "vehicle_enum": 9,
+    "parts": {
+        "engine": {
+            "type": "ElectricEngine",
+            "power": "100",
+            "age": "1",
+            "consumption": "10",
+            "milage": "1000",
+            "charge_cycles": "20"
+        },
+        "gearbox": {
+            "type": "AutomaticGearbox"
+        },
+        "tire": {
+            "type": "WinterTire",
+            "brand": "BMW",
+            "size": "1",
+            "age": "1",
+            "milage": "1000",
+            "grip": "12",
+            "spikes": "13"
+        },
+        "chassis": {
+            "type": "SportsChassis",
+            "brand": "BMW",
+            "size": "10",
+            "age": "1",
+            "milage": "1000",
+            "airfriction": "20"
+        }
+    }
+}
