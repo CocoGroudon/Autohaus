@@ -1,7 +1,7 @@
 import math
 
 class Part:
-    def get_data(self):
+    def get_data(self, **kwargs):
         data = self.__dict__.copy()
         data["type"] = self.__class__.__name__
         return data
@@ -9,14 +9,14 @@ class Part:
 
 
 class Motor(Part):
-    def __init__(self, power, age, consumption, milage) -> None:
+    def __init__(self, power, age, consumption, milage, **kwargs) -> None:
         self.power = power
         self.age = age
         self.consumption = consumption
         self.milage = milage
 
 class CombustionEngine(Motor):
-    def __init__(self, power, age, consumption, milage, fuel_type) -> None:
+    def __init__(self, power, age, consumption, milage, fuel_type, **kwargs) -> None:
         super().__init__(power, age, consumption, milage)
         self.fuel_type = fuel_type
 
@@ -43,7 +43,7 @@ class CombustionEngine(Motor):
         return math.exp(-0.0005 * self.milage) * math.exp(-0.01 * self.age) * math.exp(-0.0001 * self.power) * math.exp(-0.0005 * self.consumption)
 
 class ElectricEngine(Motor):
-    def __init__(self, power, age, consumption, milage, charge_cycles) -> None:
+    def __init__(self, power, age, consumption, milage, charge_cycles, **kwargs) -> None:
         super().__init__(power, age, consumption, milage)
         self.charge_cycles = charge_cycles
 
@@ -67,11 +67,11 @@ class ElectricEngine(Motor):
 
 
 class Gearbox(Part):
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         pass
 
 class ManualGearbox(Gearbox):
-    def __init__(self, gears) -> None:
+    def __init__(self, gears, **kwargs) -> None:
         super().__init__()
         self.gears = gears
         self.displayname = f"Manuell {gears} Gänge"
@@ -85,7 +85,7 @@ class ManualGearbox(Gearbox):
         return ["gears"]
 
 class AutomaticGearbox(Gearbox):
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         super().__init__()
         self.displayname = "Automatik"
 
@@ -100,7 +100,7 @@ class AutomaticGearbox(Gearbox):
 
 
 class Tire(Part):
-    def __init__(self, brand, size, age, milage) -> None:
+    def __init__(self, brand, size, age, milage, **kwargs) -> None:
         self.brand = brand
         self.size = size
         self.age = age
@@ -113,7 +113,7 @@ class Tire(Part):
         return math.exp(-0.0005 * self.age) * math.exp(-0.0001 * self.milage)
     
 class SportsTire(Tire):
-    def __init__(self, brand, size, age, milage, grip) -> None:
+    def __init__(self, brand, size, age, milage, grip, **kwargs) -> None:
         super().__init__(brand, size, age, milage)
         self.grip = grip # friction coefficient between tire and road
 
@@ -135,7 +135,7 @@ class SportsTire(Tire):
         return math.exp(-0.0005 * self.age) * math.exp(-0.0001 * self.milage)
     
 class WinterTire(Tire):
-    def __init__(self, brand, size, age, milage, grip, spikes) -> None:
+    def __init__(self, brand, size, age, milage, grip, spikes, **kwargs) -> None:
         super().__init__(brand, size, age, milage)
         self.grip = grip #friction coefficient between tire and road
         self.spikes = spikes # mechanical grip
@@ -159,7 +159,7 @@ class WinterTire(Tire):
         return math.exp(-0.0005 * self.age) * math.exp(-0.0001 * self.milage) * math.exp(-0.0001 * self.spikes) * math.exp(-0.0001 * self.grip)
     
 class SummerTire(Tire):
-    def __init__(self, brand, size, age, milage, drip) -> None:
+    def __init__(self, brand, size, age, milage, drip, **kwargs) -> None:
         super().__init__(brand, size, age, milage)
         self.drip = drip # coolness factor of the tire
 
@@ -184,7 +184,7 @@ class SummerTire(Tire):
 
 
 class Chassis(Part):
-    def __init__(self, brand, size, age, milage) -> None:
+    def __init__(self, brand, size, age, milage, **kwargs) -> None:
         self.brand = brand
         self.size = size
         self.age = age
@@ -196,7 +196,7 @@ class Chassis(Part):
         return math.exp(-0.0005 * self.age) * math.exp(-0.0001 * self.milage)
     
 class SportsChassis(Chassis):
-    def __init__(self, brand, size, age, milage, airfriction) -> None:
+    def __init__(self, brand, size, age, milage, airfriction, **kwargs) -> None:
         super().__init__(brand, size, age, milage)
         self.airfriction = airfriction 
 
@@ -218,7 +218,7 @@ class SportsChassis(Chassis):
         return math.exp(-0.0005 * self.age) * math.exp(-0.0001 * self.milage)
     
 class LuxuryChassis(Chassis):
-    def __init__(self, brand, size, age, milage, comfort) -> None:
+    def __init__(self, brand, size, age, milage, comfort, **kwargs) -> None:
         super().__init__(brand, size, age, milage)
         self.comfort = comfort # coolness factor of the chassis
 

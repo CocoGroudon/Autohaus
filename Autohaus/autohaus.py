@@ -10,16 +10,6 @@ from .settings import Settings
 from .carparts import *
 
 
-import pickle
-def save_car(objekt):
-    with open("D:\Schule\Info\Autohaus\Autohaus\car.pkl", 'wb') as datei:
-        pickle.dump(objekt, datei)
-
-
-
-
-
-
 class Vehicle:
     storage_path = None
 
@@ -71,20 +61,16 @@ class Car(Vehicle):
 
     def get_data(self):
         data = self.__dict__.copy()
-        data["type"] = self.__name__
-        partsdict  = {}
-        for parttype in self.parts.keys():
-            part = self.parts[parttype]
-            partsdict[parttype] = part.get_data()
-        data["parts"] = partsdict
+        data["type"] = self.__class__.__name__
+        data["parts"]  = {}
+
+        for part_key in self.parts:
+            part = self.parts[part_key]
+            data["parts"][part_key] = part.get_data()
+
+        print(data)
         return data
 
-    def build_from_data(self, data): #TODO: test
-        self.__dict__.update(data)
-        for parttype in self.parts.keys():
-            part = self.parts[parttype]
-            partdata = data["parts"][parttype]
-            part.__dict__.update(partdata)
 
 
 
@@ -115,6 +101,9 @@ class Autohaus:
         }
 
         self.known_parts_types = {
+            "Car": Car,
+            "Motorcycle": Motorcycle,
+
             "Motor": Motor,
             "CombustionEngine": CombustionEngine,
             "ElectricEngine": ElectricEngine,
@@ -205,26 +194,21 @@ class Autohaus:
             for vehicle in os.listdir(directory):
                 with open(os.path.join(directory, vehicle), "r") as f:
                     data = json.load(f)
-                    self.vehicles.append(self.build_vehicle(data))
-
-    def build_vehicle(self, data):
-        type = data["type"]
-        typeclass = self.known_vehicle_types[type]
-        parts = data["parts"]
-        for part_key in parts:
-            part = parts[part_key]
-            parts[part_key] = self.build_part(part)
-
-        vehicle = typeclass(engine=parts["engine"], gearbox=parts["gearbox"], tire=parts["tire"], chassis=parts["chassis"], **data)
-        # print(f"finished building {vehicle.brand} {vehicle.model}")
-        return vehicle
+                    self.vehicles.append(self.build_part(data))
     
     def build_part(self, data):
+        data = data.copy()
+
+        parts = data["parts"] if "parts" in data else []
+        for part_key in parts: # infinite part inception possible
+            part = parts[part_key]
+            data[part_key] = self.build_part(part)
+
         type = data["type"]
-        del data["type"]
         typeclass = self.known_parts_types[type]
+        del data["type"]
         part = typeclass(**data)
-        # print(f"finished building {type}", part)
+        print(f"finished building {type}", part)
         return part
 
 
@@ -248,7 +232,10 @@ class Autohaus:
         vehiclepath = os.path.join(vehicle.storage_path, f"{vehicle.vehicle_enum}-{vehicle.brand}-{vehicle.model}.json")
         vehicle_data = vehicle.get_data()
 
-        save_car(vehicle)
+        with open(vehiclepath, "w") as f:
+            json.dump(vehicle_data, f)
+
+        self.save_dynamic_config()
 
 
 

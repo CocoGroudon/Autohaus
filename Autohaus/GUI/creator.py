@@ -130,7 +130,11 @@ class Creator(tk.Toplevel):
 
 
 
-        if vehicle_type == "Auto":
+        if not vehicle_type in self.autohaus.known_vehicle_types.keys():
+            messagebox.showerror(title="Fehler!", message="Dieser Fahrzeugtyp wird noch nicht unterstützt!")
+            return
+        
+        if vehicle_type == "Car":
             self.destroy()
             window = CarConstructionWindow(parent=self.parent, autohaus=self.autohaus, data=data, engine=engine, gearbox=gearbox, tire=tire, chassis=chassis)
             self.parent.wait_window(window)

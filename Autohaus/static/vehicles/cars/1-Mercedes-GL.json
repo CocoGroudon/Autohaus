@@ -1,0 +1,45 @@
+{
+    "type": "Car",
+    "brand": "Mercedes",
+    "model": "GL",
+    "price": "20000",
+    "color": "Rot",
+    "image_path": "d:\\Schule\\Info\\Autohaus\\Autohaus\\Autohaus\\static\\images\\2023-12-02_00-37-50.png",
+    "description": null,
+    "sold": false,
+    "vehicle_enum": 1,
+    "parts": {
+        "engine": {
+            "power": "50",
+            "age": "6",
+            "consumption": "7",
+            "milage": "25.000",
+            "fuel_type": "Benzin",
+            "infotext": "\n    Verbrennungsmotor:\n        Leistung: 50 kW\n        Alter: 6 Jahre\n        Verbrauch: 7 l/100km\n        Kilometerstand: 25.000 km\n        Kraftstoff: Benzin\n",
+            "type": "CombustionEngine"
+        },
+        "gearbox": {
+            "displayname": "Automatik",
+            "infotext": "\n    Automatik Getriebe\n    ",
+            "type": "AutomaticGearbox"
+        },
+        "tire": {
+            "brand": "Mercedes",
+            "size": "10",
+            "age": "5",
+            "milage": "19.000",
+            "grip": "6",
+            "infotext": "\n    Sportreifen:\n        Marke: Mercedes\n        Gr\u00f6\u00dfe: 10\n        Alter: 5 Jahre\n        Kilometerstand: 19.000 km\n        Grip: 6\n    ",
+            "type": "SportsTire"
+        },
+        "chassis": {
+            "brand": "Mercedes",
+            "size": "12",
+            "age": "6",
+            "milage": "25.000",
+            "airfriction": "30",
+            "infotext": "\n    Sportchassis:\n        Marke: Mercedes\n        Gr\u00f6\u00dfe: 12\n        Alter: 6 Jahre\n        Kilometerstand: 25.000 km\n        Luftwiderstand: 30\n    ",
+            "type": "SportsChassis"
+        }
+    }
+}
