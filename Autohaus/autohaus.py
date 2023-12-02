@@ -7,82 +7,17 @@ import math
 
 from .credentialManager import CredentialManager
 from .settings import Settings
-from .carparts import *
-
-
-class Vehicle:
-    storage_path = None
-
-    def __init__(self, brand, model, price, color, description, image_path, **kwargs):
-        self.brand = brand
-        self.model = model
-        self.price = price
-        self.color = color
-        self.image_path = image_path
-
-        self.description = description
-        self.sold = False
-
-        self.vehicle_enum = None
-        if "vehicle_enum" in kwargs:
-            self.vehicle_enum = kwargs["vehicle_enum"]
-
-        
-    def save_json(self, file):
-        json.dump(self.__dict__, file)
-
-    def load_json(self, json_string):
-        data = json.loads(json_string)
-        self.__dict__.update(data)
-        return self
-    
-    def get_image(self):
-        if not self.image:
-            return None
-        path = os.path.join(Settings.IMAGE_DIR, f"{self.vehicle_enum}-{self.brand}-{self.model}.png")
-        return path
-
-class Car(Vehicle):
-    # set path for cars directory
-    storage_path = Settings.CARS_DIR
-
-    def __init__(self, brand, model, price, color, description, image_path, engine:Motor, gearbox:Gearbox, tire:Tire, chassis:Chassis,  **kwargs):
-        super().__init__(brand, model, price, color, description, image_path)
-        print(engine)
-        print(gearbox)
-        print(tire)
-        print(chassis)
-        self.parts = {
-            "engine": engine,
-            "gearbox": gearbox,
-            "tire": tire,
-            "chassis": chassis
-        }
-
-    def get_data(self):
-        data = self.__dict__.copy()
-        data["type"] = self.__class__.__name__
-        data["parts"]  = {}
-
-        for part_key in self.parts:
-            part = self.parts[part_key]
-            data["parts"][part_key] = part.get_data()
-
-        print(data)
-        return data
+from . import vehicles
 
 
 
+known_vehicle_types = vehicles.known_types
 
+known_parts_types = {}
 
-class Motorcycle(Vehicle):
-    # set path for motorcycles directory
-    storage_path = Settings.MOTORCYCLES_DIR
-
-    def __init__(self, brand, model, price, **kwargs):
-        super().__init__(brand, model, price, **kwargs)
-
-
+known_parts_types.update(known_vehicle_types)
+known_parts_types.update(vehicles.parts.known_types)
+print(f"known parts types: {known_parts_types}")
 
 
 
@@ -93,35 +28,6 @@ class Autohaus:
     def __init__(self):
         self.credentialManager = CredentialManager()
         self.user = None    
-
-
-        self.known_vehicle_types = {
-            "Car": Car,
-            "Motorcycle": Motorcycle
-        }
-
-        self.known_parts_types = {
-            "Car": Car,
-            "Motorcycle": Motorcycle,
-
-            "Motor": Motor,
-            "CombustionEngine": CombustionEngine,
-            "ElectricEngine": ElectricEngine,
-
-            "Gearbox": Gearbox,
-            "ManualGearbox": ManualGearbox,
-            "AutomaticGearbox": AutomaticGearbox,
-
-            "Tire": Tire,
-            "WinterTire": WinterTire,
-            "SummerTire": SummerTire,
-            "SportsTire": SportsTire,
-
-            "Chassis": Chassis,
-            "SportsChassis": SportsChassis,
-            "LuxuryChassis": LuxuryChassis
-
-        }
 
         # preload config in case it doesn't exist
         self.name = "Autohaus"
@@ -188,8 +94,8 @@ class Autohaus:
                 self.name = data["name"]
 
     def load_vehicles(self):
-        for type in self.known_vehicle_types.keys():
-            typeclass = self.known_vehicle_types[type]
+        for type in known_vehicle_types.keys():
+            typeclass = known_vehicle_types[type]
             directory = typeclass.storage_path
             for vehicle in os.listdir(directory):
                 with open(os.path.join(directory, vehicle), "r") as f:
@@ -205,7 +111,7 @@ class Autohaus:
             data[part_key] = self.build_part(part)
 
         type = data["type"]
-        typeclass = self.known_parts_types[type]
+        typeclass = known_parts_types[type]
         del data["type"]
         part = typeclass(**data)
         print(f"finished building {type}", part)

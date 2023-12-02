@@ -3,7 +3,7 @@ from tkinter import messagebox, ttk, filedialog
 
 from .autocompleteentry import AutocompleteEntry
 from .partframe import PartFrame
-from ...autohaus import Car
+from ...vehicles import Car
 
 class CarConstructionWindow(tk.Toplevel):
     def __init__(self, *, parent, autohaus, data, engine, gearbox, tire, chassis, **kwargs):
