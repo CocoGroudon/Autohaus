@@ -1,9 +1,5 @@
 import json
 import os
-import time
-import shutil
-from PIL import Image
-import math
 
 from .credentialManager import CredentialManager
 from .settings import Settings
@@ -51,33 +47,6 @@ class Autohaus:
     def get_vehicles(self):
         return self.vehicles
         
-    def get_engines(self):
-        return {
-            "Verbrenner": CombustionEngine,
-            "Elektro": ElectricEngine
-        }
-
-    def get_fuels(self):
-        return ["Benzin", "Diesel", "Elektro", "Hybrid"]
-
-    def get_gearboxes(self):
-        return {
-            "Automatik": AutomaticGearbox,
-            "Manuell": ManualGearbox
-        }
-    
-    def get_tires(self):
-        return {
-            "Winter": WinterTire,
-            "Sommer": SummerTire,
-            "Sport": SportsTire
-        }
-    
-    def get_chassis(self):
-        return {
-            "Sport": SportsChassis,
-            "Luxus": LuxuryChassis
-        }
 
     def load_config(self):
         # test if config exists
@@ -158,4 +127,3 @@ class Autohaus:
 
 if __name__ == "__main__":
     autohaus = Autohaus()
-    # autohaus.process_image("D:\Schule\Info\\2015-GL-Class-GL450.png", "D:\Schule\Info\Autohaus\Autohaus\static\images\\0-Mercedes-AMG.png")

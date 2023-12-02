@@ -10,5 +10,15 @@ class Motorcycle(Vehicle):
     # set path for motorcycles directory
     storage_path = Settings.MOTORCYCLES_DIR
 
-    def __init__(self, brand, model, price, **kwargs):
-        super().__init__(brand, model, price, **kwargs)
+    def __init__(self, brand, model, price, color, description, image_path, engine:Engine, gearbox:Gearbox, tire:Tire, chassis:Chassis,  **kwargs):
+        super().__init__(brand, model, price, color, description, image_path)
+        print(engine)
+        print(gearbox)
+        print(tire)
+        print(chassis)
+        self.parts = {
+            "engine": engine,
+            "gearbox": gearbox,
+            "tire": tire,
+            "chassis": chassis
+        }

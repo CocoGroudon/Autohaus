@@ -3,12 +3,12 @@ from tkinter import messagebox, ttk, filedialog
 
 from .autocompleteentry import AutocompleteEntry
 from .partframe import PartFrame
-from ...vehicles.car import Car
+from ...vehicles.motorcycle import Motorcycle
 
-class CarConstructionWindow(tk.Toplevel):
+class MotorcycleConstructionWindow(tk.Toplevel):
     def __init__(self, *, parent, autohaus, data, engine, gearbox, tire, chassis, **kwargs):
         super().__init__(parent, **kwargs)
-        self.title("Auto erstellen")
+        self.title("Motorrad erstellen")
         self.parent = parent
         self.autohaus = autohaus
         self.data = data
@@ -52,7 +52,7 @@ class CarConstructionWindow(tk.Toplevel):
             messagebox.showerror(title="Fehler!", message="Bitte fülle alle Felder mit * aus!")
             return
 
-        self.vehicle = Car(engine=engine, gearbox=gearbox, tire=tire, chassis=chassis, **self.data)
+        self.vehicle = Motorcycle(engine=engine, gearbox=gearbox, tire=tire, chassis=chassis, **self.data)
         self.destroy()
 
     def load_protocol(self):

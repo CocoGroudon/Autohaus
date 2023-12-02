@@ -6,6 +6,9 @@ import datetime
 
 from .autocompleteentry import AutocompleteEntry
 from .constructionwindows.car import CarConstructionWindow
+from .constructionwindows.motorcycle import MotorcycleConstructionWindow
+
+from .. import vehicles
 
 
 
@@ -41,7 +44,7 @@ class Creator(tk.Toplevel):
         # takes possible types from autohaus.known_vehicle_types and creates a selection menu
         self.type_label = ttk.Label(self, text="Typ *:")
         self.type_label.grid(row=0, column=0, sticky=tk.W)
-        self.type_entry = ttk.Combobox(self, values=list(self.autohaus.known_vehicle_types.keys()))
+        self.type_entry = ttk.Combobox(self, values=list(vehicles.known_types.keys()))
         self.type_entry.grid(row=0, column=1, sticky=tk.W)
 
         self.brand_label = ttk.Label(self, text="Marke *:")
@@ -67,22 +70,22 @@ class Creator(tk.Toplevel):
 
         self.engine_label = ttk.Label(self, text="Motor Typ:")
         self.engine_label.grid(row=5, column=0, sticky=tk.W)
-        self.engine_entry = ttk.Combobox(self, values=list(self.autohaus.get_engines().keys()))
+        self.engine_entry = ttk.Combobox(self, values=list(vehicles.parts.engine.known_types.keys()))
         self.engine_entry.grid(row=5, column=1, sticky=tk.W)
 
         self.gearbox_label = ttk.Label(self, text="Getriebe:")
         self.gearbox_label.grid(row=7, column=0, sticky=tk.W)
-        self.gearbox_entry = ttk.Combobox(self, values=list(self.autohaus.get_gearboxes().keys()))
+        self.gearbox_entry = ttk.Combobox(self, values=list(vehicles.parts.gearbox.known_types.keys()))
         self.gearbox_entry.grid(row=7, column=1, sticky=tk.W)
 
         self.tire_label = ttk.Label(self, text="Reifen:")
         self.tire_label.grid(row=8, column=0, sticky=tk.W)
-        self.tire_entry = ttk.Combobox(self, values=list(self.autohaus.get_tires().keys()))
+        self.tire_entry = ttk.Combobox(self, values=list(vehicles.parts.tire.known_types.keys()))
         self.tire_entry.grid(row=8, column=1, sticky=tk.W)
 
         self.chassis_label = ttk.Label(self, text="Fahrwerk:")
         self.chassis_label.grid(row=9, column=0, sticky=tk.W)
-        self.chassis_entry = ttk.Combobox(self, values=list(self.autohaus.get_chassis().keys()))
+        self.chassis_entry = ttk.Combobox(self, values=list(vehicles.parts.chassis.known_types.keys()))
         self.chassis_entry.grid(row=9, column=1, sticky=tk.W)
 
 
@@ -107,10 +110,10 @@ class Creator(tk.Toplevel):
 
         color = self.color_entry.get()
 
-        engine = self.autohaus.get_engines()[self.engine_entry.get()]
-        gearbox = self.autohaus.get_gearboxes()[self.gearbox_entry.get()]
-        tire = self.autohaus.get_tires()[self.tire_entry.get()]
-        chassis = self.autohaus.get_chassis()[self.chassis_entry.get()]
+        engine = vehicles.parts.engine.known_types[self.engine_entry.get()]
+        gearbox =vehicles.parts.gearbox.known_types[self.gearbox_entry.get()]
+        tire = vehicles.parts.tire.known_types[self.tire_entry.get()]
+        chassis = vehicles.parts.chassis.known_types[self.chassis_entry.get()]
 
         if not brand or not model or not price or not vehicle_type or not engine or not gearbox or not tire or not chassis or not color:
             messagebox.showerror(title="Fehler!", message="Bitte fülle alle Felder aus!")
@@ -130,18 +133,26 @@ class Creator(tk.Toplevel):
 
 
 
-        if not vehicle_type in self.autohaus.known_vehicle_types.keys():
+        if not vehicle_type in vehicles.known_types.keys():
             messagebox.showerror(title="Fehler!", message="Dieser Fahrzeugtyp wird noch nicht unterstützt!")
             return
         
-        if vehicle_type == "Car":
-            self.destroy()
-            window = CarConstructionWindow(parent=self.parent, autohaus=self.autohaus, data=data, engine=engine, gearbox=gearbox, tire=tire, chassis=chassis)
-            self.parent.wait_window(window)
-            vehicle = window.vehicle
-        else:
-            messagebox.showerror(title="Fehler!", message="Dieser Fahrzeugtyp wird noch nicht unterstützt!")
-            return
+
+        match vehicle_type:
+            case "Car":
+                self.destroy()
+                window = CarConstructionWindow(parent=self.parent, autohaus=self.autohaus, data=data, engine=engine, gearbox=gearbox, tire=tire, chassis=chassis)
+                self.parent.wait_window(window)
+                vehicle = window.vehicle
+
+            case "Motorcycle":
+                self.destroy
+                window = MotorcycleConstructionWindow(parent=self.parent, autohaus=self.autohaus, data=data, engine=engine, gearbox=gearbox, tire=tire, chassis=chassis)
+                self.parent.wait_window(window)
+                vehicle = window.vehicle
+            case _:
+                messagebox.showerror(title="Fehler!", message="Dieser Fahrzeugtyp wird noch nicht unterstützt!")
+                return
 
         self.autohaus.add_vehicle(vehicle)    
     

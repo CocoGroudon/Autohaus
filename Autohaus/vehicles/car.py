@@ -23,14 +23,3 @@ class Car(Vehicle):
             "chassis": chassis
         }
 
-    def get_data(self):
-        data = self.__dict__.copy()
-        data["type"] = self.__class__.__name__
-        data["parts"]  = {}
-
-        for part_key in self.parts:
-            part = self.parts[part_key]
-            data["parts"][part_key] = part.get_data()
-
-        print(data)
-        return data
