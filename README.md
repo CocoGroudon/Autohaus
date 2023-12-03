@@ -5,15 +5,15 @@ von Constantin Schultz
 
 # Ausführung
 **Das Projekt ist ein Modul und muss deswegen auch als solches ausgeführt werden.**\
-Der Ausfürhungsordner ist in dem überordner von Autohaus.\
+Der Ausfürhungsordner ist in dem überordner von Autohaus. \
 z.B. D:\Informatik\Autohaus -> Ausführungsordner = D:\Informatik
-\
+
 
 **Da switch cases verwendet werden, muss python 3.10 oder höher verwendet werden.**\
 python3.11 -m Autohaus
 
 **Es kann sein, dass manche packages noch instaliert werden müssen,** \
-**diese sind jedoch recht standart und sind mit hoher wahrscheinlichkeit schon instaliert.** \
+**diese sind jedoch recht standart und sind mit hoher wahrscheinlichkeit schon instaliert.** 
 
 **Packages, welche fehlen könnten, sind:** \
 Pillow (PIL):   \
@@ -53,4 +53,4 @@ oder
 
 ## Klassendiagramm
 zu finden in Docs\Autohaus.pdf\
-xfun::embed_file("Docs\Autohaus.pdf")
+xfun::embed_file("Docs\Autohaus.pdf");
