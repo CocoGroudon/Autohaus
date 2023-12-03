@@ -67,7 +67,4 @@ class PartFrame(ttk.Frame):
     def get_part(self):
         if not self.check_if_filled():
             return None
-        # values = self.get_values()
-        # if len(values) == 0: # If no values are required, return the part
-        #     return self.part()
         return self.part(**self.get_values())

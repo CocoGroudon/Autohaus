@@ -1,6 +1,5 @@
 # Description: This file contains the settings for the project
 import os
-import dataclasses
 
 class Settings:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))

@@ -5,12 +5,25 @@ von Constantin Schultz
 
 # Ausführung
 **Das Projekt ist ein Modul und muss deswegen auch als solches ausgeführt werden.**\
-**Da match cases verwendet werden, muss python 3.9 oder höher verwendet werden.**
-
 Der Ausfürhungsordner ist in dem überordner von Autohaus.\
 z.B. D:\Informatik\Autohaus -> Ausführungsordner = D:\Informatik
+\
 
-python -m Autohaus
+**Da switch cases verwendet werden, muss python 3.10 oder höher verwendet werden.**\
+python3.11 -m Autohaus
+
+**Es kann sein, dass manche packages noch instaliert werden müssen,** \
+**diese sind jedoch recht standart und sind mit hoher wahrscheinlichkeit schon instaliert.** \
+
+**Packages, welche fehlen könnten, sind:** \
+Pillow (PIL):   \
+&rarr; pip install Pillow
+
+tkiner:  \
+&rarr; pip install tk
+
+
+
 
 
 # Aufgabenstellung

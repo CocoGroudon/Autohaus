@@ -1,7 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox, ttk, filedialog
 
-from .autocompleteentry import AutocompleteEntry
 from .partframe import PartFrame
 from ...vehicles.motorcycle import Motorcycle
 

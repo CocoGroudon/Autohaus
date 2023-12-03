@@ -1,11 +1,6 @@
 import json
 import os
-import time
 
-from .parts.chassis import Chassis
-from .parts.engine import Engine
-from .parts.gearbox import Gearbox
-from .parts.tire import Tire
 from ..settings import Settings
 
 
