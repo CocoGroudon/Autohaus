@@ -16,7 +16,7 @@ class GUI(tk.Tk):
         self.load_protocol()
         self.login()
 
-    def changeFrame(self, frame):
+    def change_frame(self, frame):
         self.frames.append(frame)
         self.currentFrame = frame
         self.currentFrame.pack(fill=tk.BOTH, expand=True)
@@ -24,11 +24,11 @@ class GUI(tk.Tk):
 
     def login(self):
         login_popup = LoginFrame(self, autohaus= self.autohaus)
-        self.changeFrame(login_popup)
+        self.change_frame(login_popup)
 
     def standardView(self):
         standard_view = StandardView(parent=self, autohaus=self.autohaus)
-        self.changeFrame(standard_view)
+        self.change_frame(standard_view)
 
     def load_protocol(self):
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
