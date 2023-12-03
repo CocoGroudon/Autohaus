@@ -1,0 +1,45 @@
+{
+    "brand": "RedBull",
+    "model": "Dose",
+    "price": "999.999",
+    "color": "Blau / Silber",
+    "image_path": "d:\\Schule\\Info\\Autohaus\\Autohaus\\Autohaus\\static\\images\\2023-12-03_01-16-32.png",
+    "description": "Das beste Auto, welches jemals gebaut wurde!",
+    "sold": false,
+    "vehicle_enum": 5,
+    "parts": {
+        "engine": {
+            "power": "500",
+            "age": "5",
+            "consumption": "15",
+            "milage": "384.400",
+            "fuel_type": "RedBul",
+            "infotext": "\n    Verbrennungsmotor:\n        Leistung: 500 kW\n        Alter: 5 Jahre\n        Verbrauch: 15 l/100km\n        Kilometerstand: 384.400 km\n        Kraftstoff: RedBul\n",
+            "type": "CombustionEngine"
+        },
+        "gearbox": {
+            "displayname": "Automatik",
+            "infotext": "\n    Automatik Getriebe\n    ",
+            "type": "AutomaticGearbox"
+        },
+        "tire": {
+            "brand": "RedBull",
+            "size": "4",
+            "age": "1",
+            "milage": "25.000",
+            "grip": "8",
+            "infotext": "\n    Sportreifen:\n        Marke: RedBull\n        Gr\u00f6\u00dfe: 4\n        Alter: 1 Jahre\n        Kilometerstand: 25.000 km\n        Grip: 8\n    ",
+            "type": "SportsTire"
+        },
+        "chassis": {
+            "brand": "RedBull",
+            "size": "8",
+            "age": "5",
+            "milage": "768.800",
+            "comfort": "4",
+            "infotext": "\n    Luxuschassis:\n        Marke: RedBull\n        Gr\u00f6\u00dfe: 8\n        Alter: 5 Jahre\n        Kilometerstand: 768.800 km\n        Komfort: 4\n    ",
+            "type": "LuxuryChassis"
+        }
+    },
+    "type": "Car"
+}

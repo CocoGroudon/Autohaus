@@ -2,7 +2,7 @@
     "type": "Car",
     "brand": "BMW",
     "model": "i5",
-    "price": "50000",
+    "price": "50.000",
     "color": "Silber",
     "image_path": "d:\\Schule\\Info\\Autohaus\\Autohaus\\Autohaus\\static\\images\\2023-12-01_22-44-13.png",
     "description": "None",

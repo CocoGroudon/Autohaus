@@ -1,1 +1,45 @@
-{"brand": "Merc", "model": "AMG ", "price": "35.000", "color": "Weiss", "image_path": "d:\\Schule\\Info\\Autohaus\\Autohaus\\Autohaus\\static\\images\\2023-12-02_00-45-30.png", "description": null, "sold": false, "vehicle_enum": 3, "parts": {"engine": {"power": "125", "age": "4", "consumption": "12", "milage": "15.000", "fuel_type": "Diesel", "infotext": "\n    Verbrennungsmotor:\n        Leistung: 125 kW\n        Alter: 4 Jahre\n        Verbrauch: 12 l/100km\n        Kilometerstand: 15.000 km\n        Kraftstoff: Diesel\n", "type": "CombustionEngine"}, "gearbox": {"displayname": "Automatik", "infotext": "\n    Automatik Getriebe\n    ", "type": "AutomaticGearbox"}, "tire": {"brand": "Mercedes", "size": "8", "age": "1", "milage": "1.000", "grip": "10", "infotext": "\n    Sportreifen:\n        Marke: Mercedes\n        Gr\u00f6\u00dfe: 8\n        Alter: 1 Jahre\n        Kilometerstand: 1.000 km\n        Grip: 10\n    ", "type": "SportsTire"}, "chassis": {"brand": "Mercedes", "size": "18", "age": "4", "milage": "15.000", "comfort": "8", "infotext": "\n    Luxuschassis:\n        Marke: Mercedes\n        Gr\u00f6\u00dfe: 18\n        Alter: 4 Jahre\n        Kilometerstand: 15.000 km\n        Komfort: 8\n    ", "type": "LuxuryChassis"}}, "type": "Car"}
+{
+    "brand": "Merc",
+    "model": "AMG ",
+    "price": "35.000",
+    "color": "Weiss",
+    "image_path": "d:\\Schule\\Info\\Autohaus\\Autohaus\\Autohaus\\static\\images\\2023-12-02_00-45-30.png",
+    "description": null,
+    "sold": false,
+    "vehicle_enum": 3,
+    "parts": {
+        "engine": {
+            "power": "125",
+            "age": "4",
+            "consumption": "12",
+            "milage": "15.000",
+            "fuel_type": "Diesel",
+            "infotext": "\n    Verbrennungsmotor:\n        Leistung: 125 kW\n        Alter: 4 Jahre\n        Verbrauch: 12 l/100km\n        Kilometerstand: 15.000 km\n        Kraftstoff: Diesel\n",
+            "type": "CombustionEngine"
+        },
+        "gearbox": {
+            "displayname": "Automatik",
+            "infotext": "\n    Automatik Getriebe\n    ",
+            "type": "AutomaticGearbox"
+        },
+        "tire": {
+            "brand": "Mercedes",
+            "size": "8",
+            "age": "1",
+            "milage": "1.000",
+            "grip": "10",
+            "infotext": "\n    Sportreifen:\n        Marke: Mercedes\n        Gr\u00f6\u00dfe: 8\n        Alter: 1 Jahre\n        Kilometerstand: 1.000 km\n        Grip: 10\n    ",
+            "type": "SportsTire"
+        },
+        "chassis": {
+            "brand": "Mercedes",
+            "size": "18",
+            "age": "4",
+            "milage": "15.000",
+            "comfort": "8",
+            "infotext": "\n    Luxuschassis:\n        Marke: Mercedes\n        Gr\u00f6\u00dfe: 18\n        Alter: 4 Jahre\n        Kilometerstand: 15.000 km\n        Komfort: 8\n    ",
+            "type": "LuxuryChassis"
+        }
+    },
+    "type": "Car"
+}

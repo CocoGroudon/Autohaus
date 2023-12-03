@@ -2,7 +2,7 @@
     "type": "Car",
     "brand": "Mercedes",
     "model": "GL",
-    "price": "20000",
+    "price": "20.000",
     "color": "Rot",
     "image_path": "d:\\Schule\\Info\\Autohaus\\Autohaus\\Autohaus\\static\\images\\2023-12-02_00-37-50.png",
     "description": null,

@@ -1,1 +1,46 @@
-{"brand": "Mercedes", "model": "GLK", "price": "10000", "color": "Gold", "image_path": "d:\\Schule\\Info\\Autohaus\\Autohaus\\Autohaus\\static\\images\\2023-12-02_18-21-16.png", "description": null, "sold": false, "vehicle_enum": 4, "parts": {"engine": {"power": "80", "age": "15", "consumption": "10", "milage": "210000", "fuel_type": "Diesel", "infotext": "\n    Verbrennungsmotor:\n        Leistung: 80 kW\n        Alter: 15 Jahre\n        Verbrauch: 10 l/100km\n        Kilometerstand: 210000 km\n        Kraftstoff: Diesel\n", "type": "CombustionEngine"}, "gearbox": {"displayname": "Automatik", "infotext": "\n    Automatik Getriebe\n    ", "type": "AutomaticGearbox"}, "tire": {"brand": "Mercedes", "size": "8", "age": "4", "milage": "20000", "grip": "3", "spikes": "2", "infotext": "\n    Winterreifen:\n        Marke:              Mercedes\n        Gr\u00f6\u00dfe:              8\n        Alter:              4 Jahre\n        Kilometerstand:     20000 km\n        Grip:               3\n        Grip im Schnee:     2\n    ", "type": "WinterTire"}, "chassis": {"brand": "Coustom", "size": "16", "age": "6", "milage": "40000", "comfort": "36", "infotext": "\n    Luxuschassis:\n        Marke: Coustom\n        Gr\u00f6\u00dfe: 16\n        Alter: 6 Jahre\n        Kilometerstand: 40000 km\n        Komfort: 36\n    ", "type": "LuxuryChassis"}}, "type": "Car"}
+{
+    "brand": "Mercedes",
+    "model": "GLK",
+    "price": "10.000",
+    "color": "Gold",
+    "image_path": "d:\\Schule\\Info\\Autohaus\\Autohaus\\Autohaus\\static\\images\\2023-12-02_18-21-16.png",
+    "description": null,
+    "sold": false,
+    "vehicle_enum": 4,
+    "parts": {
+        "engine": {
+            "power": "80",
+            "age": "15",
+            "consumption": "10",
+            "milage": "210000",
+            "fuel_type": "Diesel",
+            "infotext": "\n    Verbrennungsmotor:\n        Leistung: 80 kW\n        Alter: 15 Jahre\n        Verbrauch: 10 l/100km\n        Kilometerstand: 210000 km\n        Kraftstoff: Diesel\n",
+            "type": "CombustionEngine"
+        },
+        "gearbox": {
+            "displayname": "Automatik",
+            "infotext": "\n    Automatik Getriebe\n    ",
+            "type": "AutomaticGearbox"
+        },
+        "tire": {
+            "brand": "Mercedes",
+            "size": "8",
+            "age": "4",
+            "milage": "20000",
+            "grip": "3",
+            "spikes": "2",
+            "infotext": "\n    Winterreifen:\n        Marke:              Mercedes\n        Gr\u00f6\u00dfe:              8\n        Alter:              4 Jahre\n        Kilometerstand:     20000 km\n        Grip:               3\n        Grip im Schnee:     2\n    ",
+            "type": "WinterTire"
+        },
+        "chassis": {
+            "brand": "Coustom",
+            "size": "16",
+            "age": "6",
+            "milage": "40000",
+            "comfort": "36",
+            "infotext": "\n    Luxuschassis:\n        Marke: Coustom\n        Gr\u00f6\u00dfe: 16\n        Alter: 6 Jahre\n        Kilometerstand: 40000 km\n        Komfort: 36\n    ",
+            "type": "LuxuryChassis"
+        }
+    },
+    "type": "Car"
+}
