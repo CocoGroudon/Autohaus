@@ -52,5 +52,4 @@ oder
 
 
 ## Klassendiagramm
-zu finden in Docs\Autohaus.pdf\
-xfun::embed_file("Docs\Autohaus.pdf");
+[Autohaus.pdf](Docs/Autohaus.pdf)
